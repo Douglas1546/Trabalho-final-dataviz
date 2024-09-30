@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análise de Voos</title>
+    <!-- CSS para a sidebar e layout geral -->
+    <link rel="stylesheet" href="/static/css/index.css">
+    <link rel="stylesheet" href="/static/css/sidebar.css">
+    <!-- Scripts para controlar abas e sidebar -->
+    <script src="/static/scripts/index.js"></script>
+</head>
+<body style="background-color: white;">
+    <h1 class='navbar'>Dashboard de voos</h1>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <img class="user-icon" src="/static/images/user.png" alt="Imagem ilustrativa usuario">
+        <h1>Douglas</h1>
+        <a href="#" onclick="showNumVoos(); setActive(this)">Número de voos por aeroporto</a><br>
+        <a href="#" onclick="showChegadaPartida(); setActive(this)">Chegada-Partida</a><br>
+        <a href="#" onclick="showRotasPrincipais(); setActive(this)">Rotas Principais Aeroportos</a><br>
+        <a href="#" onclick="showMapasPrincipais(); setActive(this)">Mapas Principais Aeroportos</a><br> <!-- Novo slot para Mapas -->
+    </div>
+
+    <!-- Conteúdo principal -->
+    <div class="main-content">
+        
+        <!-- Criar as abas (só visíveis na seção "Num voos") -->
+        <div class="tab" id="tab-buttons" style="display: none;">
+            <button class="tablink" onclick="openTab(event, 'Aeroporto')">Voos por Aeroporto</button>
+            <button class="tablink" onclick="openTab(event, 'Cidade')">Voos por Cidade</button>
+        </div>
+
+        <!-- Conteúdo das abas -->
+        <div id="Aeroporto" class="tab-content" style="display: none;">
+            <h2>Número de Voos por Aeroporto</h2>
+            <div>{{ graph_aeroporto | safe }}</div>
+        </div>
+
+        <div id="Cidade" class="tab-content" style="display: none;">
+            <h2>Número de Voos por Cidade</h2>
+            <div>{{ graph_cidade | safe }}</div>
+        </div>
+
+        <!-- Conteúdo de "Rotas Principais Aeroportos", oculto por padrão -->
+        <div id="rotas-principais" style="display: none;">
+            <div class="tab" id="rotas-principais-buttons">
+                <button class="tablink" onclick="openRotasTab(event, 'Brasilia')">Brasília</button>
+                <button class="tablink" onclick="openRotasTab(event, 'Congonhas')">Congonhas</button>
+                <button class="tablink" onclick="openRotasTab(event, 'Galeao')">Galeão</button>
+                <button class="tablink" onclick="openRotasTab(event, 'Guarulhos')">Guarulhos</button>
+                <button class="tablink" onclick="openRotasTab(event, 'ValDeCans')">Val De Cans</button>
+            </div>
+
+            <!-- Gráficos das rotas principais por aeroporto -->
+            <div id="Brasilia" class="tab-content">
+                <h2>Principais rotas do aeroporto Presidente Juscelino Kubitschek</h2>
+                <div>{{ graph_rotas_Brasilia | safe }}</div>
+            </div>
+
+            <div id="Congonhas" class="tab-content">
+                <h2>Principais rotas do aeroporto de Congonhas</h2>
+                <div>{{ graph_rotas_Congonhas | safe }}</div>
+            </div>
+
+            <div id="Galeao" class="tab-content">
+                <h2>Principais rotas do Aeroporto Internacional Do Rio De Janeiro/Galeao</h2>
+                <div>{{ graph_rotas_Galeao | safe }}</div>
+            </div>
+
+            <div id="Guarulhos" class="tab-content">
+                <h2>Principais rotas do aeroporto Guarulhos - Governador Andre Franco Montoro</h2>
+                <div>{{ graph_rotas_Guarulhos | safe }}</div>
+            </div>
+
+            <div id="ValDeCans" class="tab-content">
+                <h2>Principais rotas do aeroporto Val De Cans</h2>
+                <div>{{ graph_rotas_Val_De_Cans | safe }}</div>
+            </div>
+        </div>
+
+        <!-- Conteúdo de "Mapas Principais Aeroportos", oculto por padrão -->
+        <div id="mapas-principais" style="display: none;">
+            <div class="tab" id="mapas-principais-buttons">
+                <button class="tablink" onclick="openMapasTab(event, 'MapaBrasilia')">Brasília</button>
+                <button class="tablink" onclick="openMapasTab(event, 'MapaCongonhas')">Congonhas</button>
+                <button class="tablink" onclick="openMapasTab(event, 'MapaGaleao')">Galeão</button>
+                <button class="tablink" onclick="openMapasTab(event, 'MapaGuarulhos')">Guarulhos</button>
+                <button class="tablink" onclick="openMapasTab(event, 'MapaValDeCans')">Val De Cans</button>
+            </div>
+
+            <!-- Gráficos de mapa para os principais aeroportos -->
+            <div id="MapaBrasilia" class="tab-content mapas">
+                <h2>Gráfico de mapa do aeroporto de Brasília</h2>
+                <div>{{ mapa_viagens_Brasilia | safe }}</div>
+            </div>
+
+            <div id="MapaCongonhas" class="tab-content mapas">
+                <h2>Gráfico de mapa do aeroporto de Congonhas</h2>
+                <div>{{ mapa_viagens_Congonhas | safe }}</div>
+            </div>
+
+            <div id="MapaGaleao" class="tab-content mapas">
+                <h2>Gráfico de mapa do aeroporto de Galeão</h2>
+                <div>{{ mapa_viagens_Galeao | safe }}</div>
+            </div>
+
+            <div id="MapaGuarulhos" class="tab-content mapas">
+                <h2>Gráfico de mapa do aeroporto de Guarulhos</h2>
+                <div>{{ mapa_viagens_Guarulhos | safe }}</div>
+            </div>
+
+            <div id="MapaValDeCans" class="tab-content mapas">
+                <h2>Gráfico de mapa do aeroporto de Val De Cans</h2>
+                <div>{{ mapa_viagens_Val_De_Cans | safe }}</div>
+            </div>
+        </div>
+
+        <!-- Conteúdo de "Chegada-Partida", oculto por padrão -->
+        <div id="chegada-partida" class="tab-content" style="display: none;">
+            <h2>Número de chegadas/partidas em cada aeroporto</h2>
+            <div>{{ graph_chegada_partida | safe }}</div>
+        </div>
+    </div>
+
+
+</body>
+</html>
