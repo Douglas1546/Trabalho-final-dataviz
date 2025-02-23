@@ -19,7 +19,7 @@ tipo_voo_colors = {
 }
 
 for _, row in df_grouped.iterrows():
-    origem = 'Val De Cans'
+    origem = 'Congonhas'
     destino = row['Aeroporto.Destino']
 
     folium.Marker(
